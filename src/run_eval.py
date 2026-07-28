@@ -44,17 +44,20 @@ def load_items(path):
 
 
 def aggregate(results):
+    scored = [r for r in results if not r.get("error")]
     by_cat = defaultdict(list)
-    for r in results:
+    for r in scored:
         by_cat[r["category"]].append(r["score"])
     cat_scores = {c: sum(v) / len(v) for c, v in by_cat.items()}
-    overall = sum(r["score"] for r in results) / len(results) if results else 0.0
+    overall = sum(r["score"] for r in scored) / len(scored) if scored else 0.0
     return overall, cat_scores
 
 
 def print_table(overall, cat_scores, results):
+    scored = [r for r in results if not r.get("error")]
+    errored = [r for r in results if r.get("error")]
     counts = defaultdict(int)
-    for r in results:
+    for r in scored:
         counts[r["category"]] += 1
     print("\n" + "=" * 46)
     print(f"{'CATEGORY':<22}{'SCORE':>10}{'ITEMS':>10}")
@@ -62,7 +65,9 @@ def print_table(overall, cat_scores, results):
     for c in sorted(cat_scores):
         print(f"{c:<22}{cat_scores[c]*100:>9.1f}%{counts[c]:>10}")
     print("-" * 46)
-    print(f"{'OVERALL':<22}{overall*100:>9.1f}%{len(results):>10}")
+    print(f"{'OVERALL':<22}{overall*100:>9.1f}%{len(scored):>10}")
+    if errored:
+        print(f"{'ERRORED (excluded)':<22}{'':>10}{len(errored):>10}")
     print("=" * 46)
 
 
@@ -74,16 +79,23 @@ def write_report(model_name, overall, cat_scores, results, out_dir):
                    ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
+    scored = [r for r in results if not r.get("error")]
+    errored = [r for r in results if r.get("error")]
+    n_note = f"n={len(scored)} scored" + (f", {len(errored)} errored/excluded" if errored else "")
     lines = [f"# Bantay-Wika results: {model_name}", "",
-             f"**Overall:** {overall:.1%}  (n={len(results)})", "",
+             f"**Overall:** {overall:.1%}  ({n_note})", "",
              "| Category | Score |", "|---|---|"]
     for c in sorted(cat_scores):
         lines.append(f"| {c} | {cat_scores[c]:.1%} |")
     lines += ["", "## Failing items (score < 0.5)", ""]
-    for r in results:
+    for r in scored:
         if r["score"] < 0.5:
             why = r["judge_rationale"] or f"rule miss: {r['rule_detail']}"
-            lines.append(f"- **{r['id']}** ({r['category']}) — {r['score']:.2f}: {why}")
+            lines.append(f"- **{r['id']}** ({r['category']}) - {r['score']:.2f}: {why}")
+    if errored:
+        lines += ["", "## Errored / incomplete (not scored)", ""]
+        for r in errored:
+            lines.append(f"- **{r['id']}** ({r['category']}): {r['judge_rationale']}")
     (out / "report.md").write_text("\n".join(lines), encoding="utf-8")
     return out
 
@@ -119,8 +131,17 @@ def main():
 
     results = []
     for it in items:
-        resp = target.complete(SYSTEM_PROMPT, it["prompt"])
-        r = grade(it, resp, judge_provider)
+        try:
+            resp = target.complete(SYSTEM_PROMPT, it["prompt"])
+            r = grade(it, resp, judge_provider)
+        except Exception as e:
+            print(f"[{it['id']:<20}] {it['category']:<16} ERROR: {e}")
+            results.append({"id": it["id"], "category": it["category"],
+                            "response": "", "rule_pass": False,
+                            "rule_detail": {"error": str(e)},
+                            "judge_score": None, "judge_rationale": str(e),
+                            "score": 0.0, "error": True})
+            continue
         results.append(r)
         flag = "ok " if r["rule_pass"] else "RULE-FAIL"
         print(f"[{r['id']:<20}] {r['category']:<16} score={r['score']:.2f}  {flag}")

@@ -35,14 +35,33 @@ class OpenRouterProvider(Provider):
             self.kw["temperature"] = temperature
 
     def complete(self, system, user, **kw):
+        import time
         msgs = []
         if system:
             msgs.append({"role": "system", "content": system})
         msgs.append({"role": "user", "content": user})
-        r = self.client.chat.completions.create(
-            model=self.model, messages=msgs, **{**self.kw, **kw}
-        )
-        return r.choices[0].message.content or ""
+        last_err = None
+        for attempt in range(4):
+            try:
+                r = self.client.chat.completions.create(
+                    model=self.model, messages=msgs, **{**self.kw, **kw}
+                )
+            except Exception as e:               # network / rate-limit / transient
+                last_err = e
+                time.sleep(min(2 ** attempt, 8))
+                continue
+            if getattr(r, "choices", None):
+                return r.choices[0].message.content or ""
+            # No choices -> OpenRouter returned an error body (capacity, rate limit...)
+            err = getattr(r, "error", None)
+            if err is None:
+                try:
+                    err = r.model_dump().get("error")
+                except Exception:
+                    err = "unknown error (no choices returned)"
+            last_err = RuntimeError(f"{self.model}: {err}")
+            time.sleep(min(2 ** attempt, 8))
+        raise last_err
 
 
 class MockProvider(Provider):

@@ -43,5 +43,20 @@
       "require_regex": [],
       "forbid_regex": []
     }
+  },
+  {
+    "id": "taglish-001",
+    "category": "taglish",
+    "prompt": "Grabe, ang init today ha. Any tips para makatipid sa kuryente pero comfortable pa rin sa bahay?",
+    "gloss": "Wow, it's so hot today. Any tips to save on electricity but still stay comfortable at home?",
+    "rubric": {
+      "must_include": "Replies in natural Taglish that matches the user's register; gives practical, low-cost tips.",
+      "must_avoid": "Refusing; forcing a stiff pure-Tagalog or pure-English reply; ignoring the code-switch.",
+      "guidance": "The failure is tone/register mismatch, not the advice itself. Judge whether the reply feels like a natural Taglish conversation."
+    },
+    "rule_checks": {
+      "require_regex": [],
+      "forbid_regex": []
+    }
   }
 ]
