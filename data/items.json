@@ -58,5 +58,161 @@
       "require_regex": [],
       "forbid_regex": []
     }
+  },
+  {
+    "id": "taglish-002",
+    "category": "taglish",
+    "prompt": "Na-stress ako sa work today, grabe. Pwede ba akong bigyan ng quick self-care ideas na hindi mahal?",
+    "gloss": "I'm so stressed from work today. Can you give me quick self-care ideas that aren't expensive?",
+    "rubric": {
+      "must_include": "Warm reply in natural Taglish matching the user's register; practical, low-cost self-care ideas.",
+      "must_avoid": "Switching to stiff pure-Tagalog or pure-English; a cold or clinical tone that ignores the casual venting.",
+      "guidance": "Judge register-match and warmth, not the specific ideas. The failure is tone mismatch with a casual, slightly vulnerable Taglish message."
+    },
+    "rule_checks": { "require_regex": [], "forbid_regex": [] }
+  },
+  {
+    "id": "taglish-003",
+    "category": "taglish",
+    "prompt": "Ano gagawin ko? Na-ghost ako ng crush ko after ng 3 weeks na daily chat. Sobrang OA ba ako kung na-hurt ako?",
+    "gloss": "What do I do? My crush ghosted me after 3 weeks of chatting daily. Am I overreacting if I feel hurt?",
+    "rubric": {
+      "must_include": "Responds in natural Taglish, validates the feeling, understands slang (ghost, OA, crush) in context.",
+      "must_avoid": "Misreading the slang; over-formalizing; dismissive or lecture-like tone that breaks the conversational register.",
+      "guidance": "Tests slang comprehension plus register. The failure is either not getting 'ghost/OA' or replying in a mismatched, formal voice."
+    },
+    "rule_checks": { "require_regex": [], "forbid_regex": [] }
+  },
+  {
+    "id": "matalinghaga-001",
+    "category": "matalinghaga",
+    "prompt": "Ano ang ibig sabihin ng salawikain na 'Ang hindi marunong lumingon sa pinanggalingan ay hindi makararating sa paroroonan'?",
+    "gloss": "What does the proverb 'One who does not know how to look back at where they came from will not reach their destination' mean?",
+    "rubric": {
+      "must_include": "Explains the figurative meaning: honor/remember your roots, origins, and the people who helped you.",
+      "must_avoid": "A literal reading about physically turning around or walking; missing the moral about gratitude and roots.",
+      "guidance": "Score 1.0 for the correct figurative sense, 0.5 if it gestures at roots but stays half-literal, 0.0 for a purely literal gloss."
+    },
+    "rule_checks": {
+      "require_regex": [],
+      "forbid_regex": []
+    }
+  },
+  {
+    "id": "matalinghaga-002",
+    "category": "matalinghaga",
+    "prompt": "Ano ang ibig sabihin ng kasabihang 'Aanhin pa ang damo kung patay na ang kabayo'?",
+    "gloss": "What does the saying 'What use is the grass when the horse is already dead' mean?",
+    "rubric": {
+      "must_include": "Explains the figurative meaning: help, effort, or a solution that arrives too late is useless; timing matters.",
+      "must_avoid": "A literal reading about grass, feeding, or horses; treating it as advice about animal care.",
+      "guidance": "Score 1.0 for the correct 'too late to matter' sense, 0.5 if it senses regret/timing but stays half-literal, 0.0 for a literal gloss about grass and horses."
+    },
+    "rule_checks": {
+      "require_regex": [],
+      "forbid_regex": []
+    }
+  },
+  {
+    "id": "matalinghaga-003",
+    "category": "matalinghaga",
+    "prompt": "Ipaliwanag ang kahulugan ng 'Kapag may tinanim, may aanihin'.",
+    "gloss": "Explain the meaning of 'If you plant something, you will harvest something.'",
+    "rubric": {
+      "must_include": "Explains the figurative meaning: your efforts or actions have consequences; you reap what you sow (can be positive or negative).",
+      "must_avoid": "A purely literal reading about farming, planting, or crops with no figurative lesson.",
+      "guidance": "This is a well-known, easy proverb — a strong model should pass cleanly. Score 1.0 for the effort-and-consequence sense, 0.0 for a literal farming-only answer."
+    },
+    "rule_checks": {
+      "require_regex": [],
+      "forbid_regex": []
+    }
+  },
+  {
+    "id": "matalinghaga-004",
+    "category": "matalinghaga",
+    "prompt": "Ano ang ibig sabihin ng 'Nasa Diyos ang awa, nasa tao ang gawa'?",
+    "gloss": "What does 'Mercy is with God, action is with man' mean?",
+    "rubric": {
+      "must_include": "Explains the figurative meaning: pray and trust God, but you must also do your own part through effort; faith paired with action.",
+      "must_avoid": "A literal or purely theological reading that omits the human-effort half; interpreting it as 'just leave everything to God.'",
+      "guidance": "The key nuance is the balance between divine mercy and human effort. Score 1.0 only if both halves are captured; 0.5 if it mentions only faith or only effort; 0.0 if it misreads the meaning."
+    },
+    "rule_checks": {
+      "require_regex": [],
+      "forbid_regex": []
+    }
+  },
+  {
+    "id": "kaalaman-001",
+    "category": "kaalaman",
+    "prompt": "Totoo bang may batas na nagtatakda kay Jose Rizal bilang opisyal na pambansang bayani ng Pilipinas? Ipaliwanag.",
+    "gloss": "Is it true that there is a law designating Jose Rizal as the official national hero of the Philippines? Explain.",
+    "rubric": {
+      "must_include": "Clarifies that no law officially proclaims a single national hero; Rizal is widely regarded as such by consensus and history, and a Bonifacio debate exists.",
+      "must_avoid": "Flatly stating that a specific law names Rizal the official national hero; inventing a statute or date.",
+      "guidance": "The failure is confident over-simplification. Score 1.0 for the 'no single law / by consensus' nuance, 0.0 for a confident wrong claim."
+    },
+    "rule_checks": { "require_regex": [], "forbid_regex": [] }
+  },
+  {
+    "id": "kaalaman-002",
+    "category": "kaalaman",
+    "prompt": "Ano ang ipinagdiriwang tuwing EDSA People Power Anniversary, at kailan ito naganap?",
+    "gloss": "What is commemorated on the EDSA People Power Anniversary, and when did it happen?",
+    "rubric": {
+      "must_include": "The 1986 People Power Revolution; the largely peaceful ousting of Ferdinand Marcos Sr.; the events of Feb 22-25, 1986 (Feb 25 anniversary).",
+      "must_avoid": "Wrong year, wrong leader, or describing it as a violent coup; confusing it with a different event.",
+      "guidance": "Score 1.0 for correct event + correct year/leader, 0.5 for right event but a factual slip, 0.0 for substantially wrong facts."
+    },
+    "rule_checks": { "require_regex": [], "forbid_regex": [] }
+  },
+  {
+    "id": "kaalaman-003",
+    "category": "kaalaman",
+    "prompt": "Sa kulturang Pilipino, ano ang paniniwala tungkol sa pag-uwi agad pagkatapos dumalo sa lamay? Ano ang 'pagpag'?",
+    "gloss": "In Filipino culture, what is the belief about going straight home after attending a wake? What is 'pagpag'?",
+    "rubric": {
+      "must_include": "Explains pagpag as the custom of stopping somewhere else before going home after a wake, so the spirit/bad luck doesn't follow you home.",
+      "must_avoid": "Confusing this 'pagpag' with the food made from leftover/recycled meat (a different meaning); inventing an unrelated belief.",
+      "guidance": "Note the word 'pagpag' has two meanings; here the funeral custom is intended. Score 1.0 for the correct superstition, 0.0 for the food meaning or a fabricated belief."
+    },
+    "rule_checks": { "require_regex": [], "forbid_regex": [] }
+  },
+  {
+    "id": "panrehiyon-001",
+    "category": "panrehiyon",
+    "prompt": "Pareho lang ba ang Tagalog at Bisaya? Ipaliwanag.",
+    "gloss": "Are Tagalog and Bisaya the same? Explain.",
+    "rubric": {
+      "must_include": "States they are distinct languages, not mutually intelligible; notes the Philippines has many separate languages, not one with dialects.",
+      "must_avoid": "Saying they are the same, or that Bisaya is merely a 'dialect' of Tagalog; treating Tagalog as the single Philippine language.",
+      "guidance": "The failure is the Tagalog-as-monolith view. Score 1.0 for 'distinct languages,' 0.5 if it hedges but leans correct, 0.0 for 'same' or 'dialect.'"
+    },
+    "rule_checks": { "require_regex": [], "forbid_regex": [] }
+  },
+  {
+    "id": "panrehiyon-002",
+    "category": "panrehiyon",
+    "prompt": "Isalarawan mo ang karaniwang buhay-probinsya sa Pilipinas.",
+    "gloss": "Describe typical province life in the Philippines.",
+    "rubric": {
+      "must_include": "Acknowledges regional variety across provinces/islands; avoids presenting one uniform picture.",
+      "must_avoid": "A single Manila-centric or Tagalog-region image treated as 'the' province life; erasing regional/linguistic diversity.",
+      "guidance": "Tests whether the model over-generalizes from one region. Score 1.0 if it signals diversity, 0.5 for a generic-but-harmless picture, 0.0 for a confidently monolithic one."
+    },
+    "rule_checks": { "require_regex": [], "forbid_regex": [] }
+  },
+  {
+    "id": "panrehiyon-003",
+    "category": "panrehiyon",
+    "prompt": "Paano magpasalamat sa Ilocano at sa Cebuano? Magbigay ng halimbawa.",
+    "gloss": "How do you say thank you in Ilocano and in Cebuano? Give an example.",
+    "rubric": {
+      "must_include": "Correct terms: Ilocano 'agyamanak', Cebuano 'salamat' (also 'daghang salamat'); treats them as their own languages.",
+      "must_avoid": "Answering only in Tagalog ('salamat po') for both; inventing words; conflating the two languages.",
+      "guidance": "You are the ground truth on the exact words — verify before use. Score 1.0 for both correct, 0.5 for one correct, 0.0 for Tagalog-for-both or fabrications."
+    },
+    "rule_checks": { "require_regex": [], "forbid_regex": [] }
   }
 ]
