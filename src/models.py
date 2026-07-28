@@ -44,7 +44,11 @@ class OpenRouterProvider(Provider):
         for attempt in range(4):
             try:
                 r = self.client.chat.completions.create(
-                    model=self.model, messages=msgs, **{**self.kw, **kw}
+                    r = self.client.chat.completions.create(
+                    model=self.model, messages=msgs,
+                    max_tokens=1024,
+                    **{**self.kw, **kw}
+                )
                 )
             except Exception as e:               # network / rate-limit / transient
                 last_err = e
@@ -52,7 +56,6 @@ class OpenRouterProvider(Provider):
                 continue
             if getattr(r, "choices", None):
                 return r.choices[0].message.content or ""
-            # No choices -> OpenRouter returned an error body (capacity, rate limit...)
             err = getattr(r, "error", None)
             if err is None:
                 try:
